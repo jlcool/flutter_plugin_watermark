@@ -24,7 +24,13 @@
     int fontSize=[call.arguments[@"fontSize"] intValue];
     int left=[call.arguments[@"left"] intValue];
     int bottom=[call.arguments[@"bottom"] intValue];
-    UIImage *img = [UIImage imageWithContentsOfFile:imagePath];
+    FlutterStandardTypedData * imageByte=call.arguments[@"imageByte"];
+    UIImage *img;
+    if(imageByte==NULL){
+        img = [UIImage imageWithContentsOfFile:imagePath];
+    }else{
+        img = [UIImage imageWithData: imageByte.data];
+    }
     int w = img.size.width;
     int h = img.size.height;
     UIGraphicsBeginImageContext(img.size);
@@ -39,9 +45,15 @@
     NSDictionary *attributes = @{ NSFontAttributeName:helveticaFont,
                                   NSParagraphStyleAttributeName:paragraphStyle,
                                   NSForegroundColorAttributeName: [UIColor whiteColor]};
-    CGSize size = [mark sizeWithAttributes:attributes];
-    [mark drawInRect:CGRectMake(left, h-bottom-size.height, size.width,
-                                size.height) withAttributes:attributes ];
+    
+    CGFloat desiredWidth = w-(left*2); // adjust accordingly
+    CGRect neededRect = [mark
+                            boundingRectWithSize:CGSizeMake(desiredWidth, CGFLOAT_MAX)
+                            options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                            attributes:attributes context:nil];
+    
+    [mark drawInRect:CGRectMake(left, h-bottom-neededRect.size.height, w-(left*2),
+                                neededRect.size.height) withAttributes:attributes ];
     UIImage *aimg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     NSData *imageData = UIImagePNGRepresentation(aimg);

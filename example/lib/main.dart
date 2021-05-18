@@ -36,8 +36,8 @@ class _MyAppState extends State<MyApp> {
                       await ImagePicker().getImage(source: ImageSource.gallery);
                   if (file != null) {
                     bytes = await FlutterPluginWatermark.watermark(
-                      file.path,
                       '2021-01-01 12:12:11\n北京市朝阳区朝阳大街1号',
+                      imagePath: file.path,
                       fontSize: 27,
                       bottom: 20,
                     );

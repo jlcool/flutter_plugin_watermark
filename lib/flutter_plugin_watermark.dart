@@ -7,12 +7,13 @@ class FlutterPluginWatermark {
   static const MethodChannel _channel =
       const MethodChannel('flutter_plugin_watermark');
 
-  static Future<Uint8List> watermark(String imagePath, String mark,
+  static Future<Uint8List> watermark(String mark,
       {int fontSize = 25,
-      int left = 70,
-      int bottom = 140,
-      int height = 160,
-      String fontName = "AvenirNextCondensed-Bold"}) async {
+      int left = 0,
+      int bottom = 0,
+      String imagePath,
+      String fontName = "AvenirNextCondensed-Bold",
+      Uint8List imageByte}) async {
     final Uint8List version =
         await _channel.invokeMethod('watermark', <String, dynamic>{
       "imagePath": imagePath,
@@ -21,6 +22,7 @@ class FlutterPluginWatermark {
       "left": left,
       "bottom": bottom,
       "fontName": fontName,
+      "imageByte": imageByte
     });
     return version;
   }
