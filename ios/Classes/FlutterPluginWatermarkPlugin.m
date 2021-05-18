@@ -54,6 +54,12 @@
     
     [mark drawInRect:CGRectMake(left, h-bottom-neededRect.size.height, w-(left*2),
                                 neededRect.size.height) withAttributes:attributes ];
+    
+    CGContextRef contextOther = UIGraphicsGetCurrentContext();
+    CGContextSetRGBFillColor(contextOther, 1, (CGFloat)199.0/255.0, (CGFloat)50.0/255.0, 1.0);
+    CGContextFillRect(contextOther, CGRectMake(left-60, h-bottom-neededRect.size.height, 20, neededRect.size.height));
+    CGContextStrokePath(contextOther);
+    
     UIImage *aimg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     NSData *imageData = UIImagePNGRepresentation(aimg);
