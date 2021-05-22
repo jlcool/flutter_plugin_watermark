@@ -62,7 +62,7 @@
     
     UIImage *aimg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    NSData *imageData = UIImagePNGRepresentation(aimg);
+    NSData *imageData = UIImageJPEGRepresentation(aimg,0.9);
     result(imageData);
 }
 @end
