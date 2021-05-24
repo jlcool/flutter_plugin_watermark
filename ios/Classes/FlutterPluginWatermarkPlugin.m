@@ -24,6 +24,7 @@
     int fontSize=[call.arguments[@"fontSize"] intValue];
     int left=[call.arguments[@"left"] intValue];
     int bottom=[call.arguments[@"bottom"] intValue];
+    CGFloat compressionQuality=[call.arguments[@"compression"] floatValue];
     FlutterStandardTypedData * imageByte=call.arguments[@"imageByte"];
     UIImage *img;
     if(imageByte==NULL){
@@ -62,7 +63,7 @@
     
     UIImage *aimg = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    NSData *imageData = UIImageJPEGRepresentation(aimg,0.9);
+    NSData *imageData = UIImageJPEGRepresentation(aimg,0.9,compressionQuality);
     result(imageData);
 }
 @end

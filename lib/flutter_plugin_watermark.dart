@@ -13,7 +13,8 @@ class FlutterPluginWatermark {
       int bottom = 0,
       String imagePath,
       String fontName = "AvenirNextCondensed-Bold",
-      Uint8List imageByte}) async {
+      Uint8List imageByte,
+      double compression = 0.5}) async {
     final Uint8List version =
         await _channel.invokeMethod('watermark', <String, dynamic>{
       "imagePath": imagePath,
@@ -22,7 +23,8 @@ class FlutterPluginWatermark {
       "left": left,
       "bottom": bottom,
       "fontName": fontName,
-      "imageByte": imageByte
+      "imageByte": imageByte,
+      "compression": compression
     });
     return version;
   }
